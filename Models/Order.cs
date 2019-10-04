@@ -18,6 +18,12 @@ namespace ZenStore.Models
 
     public DateTime? ShippedDate { get; set; }
 
-    public decimal Total { get { return Products.Sum(i => i.Price); } }
+    public decimal Total
+    {
+      get
+      {
+        return Products.Sum(i => i.Price);
+      }
+    }
   }
 }

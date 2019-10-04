@@ -9,7 +9,6 @@ namespace ZenStore.Services
   public class OrdersService
   {
     private readonly OrdersRepository _repo;
-    private readonly ProductsRepository _pr;
 
     public List<Order> GetOrders()
     {
@@ -90,10 +89,9 @@ namespace ZenStore.Services
       return order;
     }
 
-    public OrdersService(OrdersRepository repo, ProductsRepository pr)
+    public OrdersService(OrdersRepository repo)
     {
       _repo = repo;
-      _pr = pr;
     }
   }
 }

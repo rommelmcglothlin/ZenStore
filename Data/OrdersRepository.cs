@@ -26,14 +26,15 @@ namespace ZenStore.Data
     }
     public Order GetOrderById(string id)
     {
-      return _db.QueryFirstOrDefault<Order>(
+      var order = _db.QueryFirstOrDefault<Order>(
                 "SELECT * FROM orders WHERE id = @id",
                 new { id });
+      return order;
 
     }
     internal bool UpdateOrder(Order order)
     {
-      var nRows = _db.Execute(@"
+      var update = _db.Execute(@"
                 UPDATE orders SET
                 name = @Name,
                 canceled = @Canceled,
@@ -42,7 +43,7 @@ namespace ZenStore.Data
                 shippeddate = @ShippedDate
                 WHERE id = @Id
                 ", order);
-      return nRows == 1;
+      return update == 1;
     }
 
     internal bool ProductOrder(string orderId, string productId)
@@ -51,10 +52,17 @@ namespace ZenStore.Data
       var sql = @"INSERT INTO productorders 
                 (id, orderid, productid)
                 VALUES 
-                (@Id, @orderId), @productId";
+                (@Id, @orderId, @productId);";
       var success = _db.Execute(sql, new { id, orderId, productId });
       return success == 1;
 
+    }
+
+    public IEnumerable<Order> GetProductOrder(string id)
+    {
+      return _db.Query<Order>(@"SELECT * FROM productorders 
+                                WHERE id = @id",
+                                new { id });
     }
     public OrdersRepository(IDbConnection db)
     {
