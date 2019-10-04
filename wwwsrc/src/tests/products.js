@@ -48,7 +48,7 @@ export class ProductsSuite extends Suite {
         PATH + '/:id',
         async () => {
           let res = await this.getById(this.product.id)
-          if (res.data.id !== this.product.id) {
+          if (res.id !== this.product.id) {
             throw new Error("Failed to get the correct product when requesting by id")
           }
           return new TestReport(true, "Successfully retrieved product " + JSON.stringify(this.product))
