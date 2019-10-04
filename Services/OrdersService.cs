@@ -48,11 +48,13 @@ namespace ZenStore.Services
     public Order CreateOrder(Order orderData)
     {
       orderData.Id = Guid.NewGuid().ToString();
-      _repo.Create(orderData);
       orderData.OrderPlaced = DateTime.Now;
-      orderData.Products.ForEach(item =>
+      orderData.ShippedDate = null;
+
+      _repo.Create(orderData);
+      orderData.Products.ForEach(product =>
       {
-        _repo.ProductOrder(orderData.Id, item.Id);
+        _repo.ProductOrder(orderData.Id, product.Id);
       });
       return orderData;
     }
@@ -72,7 +74,6 @@ namespace ZenStore.Services
     public Order ShippedOrder(string id)
     {
       var order = _repo.GetOrderById(id);
-
 
       if (order.Canceled == true)
       {

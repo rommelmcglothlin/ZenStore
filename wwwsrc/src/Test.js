@@ -36,6 +36,9 @@ export class Test {
     } catch (e) {
       console.error(e)
       this.message = e.message
+      if(e.response && e.response.data){
+        this.message += " :: " + e.response.data
+      }
     } finally {
       this.running = false
     }

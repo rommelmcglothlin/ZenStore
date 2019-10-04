@@ -6,7 +6,7 @@
 --   price decimal(5,2) DEFAULT 4.99,
 
 --   PRIMARY KEY(id)
-
+-- );
 
 -- CREATE TABLE reviews
 -- (
@@ -27,14 +27,11 @@
 --   name VARCHAR(255) NOT NULL,
 --   canceled TINYINT DEFAULT 0,
 --   shipped TINYINT DEFAULT 0,
---   orderplaced DATETIME,
+--   orderplaced DATETIME, NOT NULL
 --   shippeddate DATETIME,
 
 --   PRIMARY KEY(id)
 -- );
-
--- ); NOTE above aleady done! Don't uncomment.
-
 
 -- CREATE TABLE productorders
 -- (

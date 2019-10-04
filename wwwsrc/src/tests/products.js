@@ -39,8 +39,8 @@ export class ProductsSuite extends Suite {
           }
           return new TestReport(true, "Successfully created product " + JSON.stringify(this.product))
         },
-        'Product',
         'POST request. This should create a new product in your database.',
+        'Product',
         'product object { id, name, description, img, price }',
       ),
       new Test(
@@ -53,8 +53,8 @@ export class ProductsSuite extends Suite {
           }
           return new TestReport(true, "Successfully retrieved product " + JSON.stringify(this.product))
         },
-        'Product',
-        'GET request. This should get one product by its id.'
+        'GET request. This should get one product by its id.',
+        'Product'
       ),
       new Test(
         'Can Edit product by product Id',
@@ -69,8 +69,8 @@ export class ProductsSuite extends Suite {
 
           return new TestReport(true, "Woot able to edit product successfully " + JSON.stringify(this.product))
         },
-        'Product',
-        'PUT request. This should update one product by its id.'
+        'PUT request. This should update one product by its id.',
+        'Product'
       ),
       new Test(
         'Can delete product by product Id',
@@ -84,8 +84,8 @@ export class ProductsSuite extends Suite {
           }
           return new TestReport(true, "Woot able to delete product successfully")
         },
-        'string',
-        'DELETE request. This should delete one product by its id.'
+        'DELETE request. This should delete one product by its id.',
+        'string'
       )
     )
   }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using ZenStore.Models;
+using System.Linq;
 
 namespace ZenStore.Data
 {
@@ -9,13 +10,19 @@ namespace ZenStore.Data
   {
     private readonly IDbConnection _db;
 
+    public IEnumerable<Review> GetAll()
+    {
+      return _db.Query<Review>("SELECT * FROM reviews");
+    }
+
     public Review GetReviewsById(string id)
     {
       return _db.QueryFirstOrDefault<Review>(
           "SELECT * FROM reviews WHERE id = @id",
-          new { id } // Dapper requires all @prop to be an actual property on an object
+          new { id }
       );
     }
+
 
     public Review Create(Review reviewData)
     {
@@ -41,9 +48,12 @@ namespace ZenStore.Data
 
     }
 
-    public IEnumerable<Review> GetReviewsForProduct()
+    public IEnumerable<Review> GetReviewsForProduct(string id)
     {
-      return _db.Query<Review>(@"SELECT * FROM reviews WHERE productid = @productid;");
+      return _db.Query<Review>(@"
+                SELECT * FROM reviews 
+                WHERE productid = @id;",
+                 new { id });
 
     }
 

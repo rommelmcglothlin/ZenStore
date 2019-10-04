@@ -35,8 +35,8 @@ export class ReviewsSuite extends Suite {
           }
           return new TestReport(true, "Successfully created review " + JSON.stringify(this.review))
         },
-        'Review',
         'POST request. This should create a new review in your database.',
+        'Review',
         'review object { id, name, description, rating, productId }',
       ),
       new Test(
@@ -52,14 +52,15 @@ export class ReviewsSuite extends Suite {
 
           return new TestReport(true, "Woot able to edit review successfully " + JSON.stringify(this.review))
         },
+        'PUT request. This should update one review by its id.',
         'Review',
-        'PUT request. This should update one review by its id.'
       ),
       new Test(
         "Get Reviews for Product",
         "products/:id/reviews",
         async () => {
-          let reviews = await api.get("products/" + this.product.id + "/reviews")
+          let res = await api.get("products/" + this.product.id + "/reviews")
+          let reviews = res.data
           if (!Array.isArray(reviews)) {
             throw new Error("Unable to get product reviews")
           }

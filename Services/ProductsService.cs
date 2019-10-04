@@ -9,7 +9,7 @@ namespace ZenStore.Services
   public class ProductsService
   {
     private readonly ProductsRepository _repo;
-    private readonly ReviewsService _rs;
+    private readonly ReviewsRepository _rs;
 
     public Product Create(Product productData)
     {
@@ -55,7 +55,7 @@ namespace ZenStore.Services
       {
         throw new Exception("Not a valid ID");
       }
-      return _rs.GetReviews().FindAll(p => p.ProductId == id);
+      return _rs.GetReviewsForProduct(product.Id).ToList();
     }
 
     public Product DeleteProduct(string id)
@@ -69,7 +69,7 @@ namespace ZenStore.Services
       return product;
     }
 
-    public ProductsService(ProductsRepository repo, ReviewsService rs)
+    public ProductsService(ProductsRepository repo, ReviewsRepository rs)
     {
       _repo = repo;
       _rs = rs;

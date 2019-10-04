@@ -13,9 +13,9 @@ namespace ZenStore.Data
     public Order Create(Order orderData)
     {
       var sql = @"INSERT INTO orders
-            (id, name, canceled, shipped, orderplaced, shippeddate)
+            (id, name, canceled, orderplaced)
             VALUES
-            (@Id, @Name, @Canceled, @Shipped, @OrderPlaced, @ShippedDate);";
+            (@Id, @Name, @Canceled, @OrderPlaced);";
       var x = _db.Execute(sql, orderData);
       return orderData;
     }
@@ -31,7 +31,7 @@ namespace ZenStore.Data
                 new { id });
 
     }
-    internal bool UpdateOrder(Order Order)
+    internal bool UpdateOrder(Order order)
     {
       var nRows = _db.Execute(@"
                 UPDATE orders SET
@@ -41,7 +41,7 @@ namespace ZenStore.Data
                 orderplaced = @OrderPlaced,
                 shippeddate = @ShippedDate
                 WHERE id = @Id
-                ", Order);
+                ", order);
       return nRows == 1;
     }
 
@@ -49,10 +49,10 @@ namespace ZenStore.Data
     {
       var id = Guid.NewGuid().ToString();
       var sql = @"INSERT INTO productorders 
-                (id, itemid, orderid)
+                (id, orderid, productid)
                 VALUES 
-                (@Id, @itemId, @orderId,)";
-      var success = _db.Execute(sql, new { orderId, productId });
+                (@Id, @orderId), @productId";
+      var success = _db.Execute(sql, new { id, orderId, productId });
       return success == 1;
 
     }

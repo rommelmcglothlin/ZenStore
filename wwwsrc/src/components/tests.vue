@@ -10,13 +10,17 @@
         <h4>{{test.name}}</h4>
       </div>
       <div class="card-body text-left">
-        <p class="alert" :class="test.success ? 'alert-success' : 'alert-danger'" v-if="test.message">
+        <p
+          class="alert"
+          :class="test.success ? 'alert-success' : 'alert-danger'"
+          v-if="test.message"
+        >
           <b>Message:</b>
           {{test.message}}
         </p>
         <p v-for="(value, key) in test.routeInfo" :key="key">
           <b>{{key}}:</b>
-          {{value}}
+          <span>{{value}}</span>
         </p>
       </div>
       <div class="card-footer text-right">

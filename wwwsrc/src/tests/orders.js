@@ -41,8 +41,8 @@ export class OrdersSuite extends Suite {
           }
           return new TestReport(true, "Successfully created order " + JSON.stringify(this.order))
         },
-        'Order',
         'POST request. This should create a new order in your database.',
+        'Order',
         'order object { id, name, products, shipped, canceled }',
       ),
       new Test(
@@ -65,8 +65,8 @@ export class OrdersSuite extends Suite {
 
           return new TestReport(true, "Woot able to edit order successfully " + JSON.stringify(this.order))
         },
-        'Order',
-        'PUT request. This should update one order by its id.'
+        'PUT request. This should update one order by its id.',
+        'Order'
       ),
       new Test(
         "Ships Order",
@@ -95,8 +95,8 @@ export class OrdersSuite extends Suite {
           }
           throw new Error("order edited after shipped")
         },
-        'Error',
-        'PUT request. This update should fail.'
+        'PUT request. This update should fail.',
+        'Error'
       ),
       new Test(
         "Non-Cancelable Order",
@@ -145,8 +145,8 @@ export class OrdersSuite extends Suite {
           }
           throw new Error("order edited after canceled")
         },
-        'Error',
-        'PUT request. This update should fail.'
+        'PUT request. This update should fail.',
+        'Error'
       ),
       new Test(
         "Non-Shippable Order",
@@ -161,7 +161,7 @@ export class OrdersSuite extends Suite {
           throw new Error("Once an order is canceled it cannot be shipped")
         },
         "PUT Request: Expects canceled orders to be non-shippable",
-        "order"
+        "Error"
       ),
 
     )
