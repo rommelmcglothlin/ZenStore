@@ -13,9 +13,9 @@ namespace ZenStore.Data
     public Order Create(Order orderData)
     {
       var sql = @"INSERT INTO orders
-            (id, name, canceled, orderplaced)
+            (id, name, orderplaced)
             VALUES
-            (@Id, @Name, @Canceled, @OrderPlaced);";
+            (@Id, @Name, @OrderPlaced);";
       var x = _db.Execute(sql, orderData);
       return orderData;
     }
@@ -52,18 +52,11 @@ namespace ZenStore.Data
       var sql = @"INSERT INTO productorders 
                 (id, orderid, productid)
                 VALUES 
-                (@Id, @orderId, @productId);";
+                (@id, @orderId, @productId);";
       var success = _db.Execute(sql, new { id, orderId, productId });
       return success == 1;
-
     }
 
-    public IEnumerable<Order> GetProductOrder(string id)
-    {
-      return _db.Query<Order>(@"SELECT * FROM productorders 
-                                WHERE id = @id",
-                                new { id });
-    }
     public OrdersRepository(IDbConnection db)
     {
       _db = db;
