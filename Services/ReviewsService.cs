@@ -38,7 +38,6 @@ namespace ZenStore.Services
       review.Name = reviewData.Name;
       review.Description = reviewData.Description;
       review.Rating = reviewData.Rating;
-
       bool success = _repo.EditReviewById(review);
       if (!success)
       {

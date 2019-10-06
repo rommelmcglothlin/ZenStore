@@ -55,6 +55,21 @@ namespace ZenStore.Data
                 (@id, @orderId, @productId);";
       var success = _db.Execute(sql, new { id, orderId, productId });
       return success == 1;
+
+    }
+    public IEnumerable<Product> GetOrders(string id)
+    {
+      var sql = @"
+            SELECT 
+            p.id,
+            p.name,
+            p.description,
+            p.price
+            FROM orders o
+            JOIN productorders po ON o.id = po.orderid
+            JOIN products p ON po.productid = p.id
+            WHERE o.id = @id";
+      return _db.Query<Product>(sql, new { id });
     }
 
     public OrdersRepository(IDbConnection db)

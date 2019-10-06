@@ -15,17 +15,27 @@ namespace ZenStore.Services
       return _repo.GetAll().ToList();
     }
 
-    public Order EditOrder(Order orderData)
+    public Order CanceledorShipped(Order orderData)//saving time to not type this all the time
     {
-      var order = _repo.GetOrderById(orderData.Id);
       if (orderData.Shipped == true || orderData.Canceled == true)
       {
         throw new Exception("You can't edit orders that have been canceled or shipped");
       }
+      return orderData;
+    }
+
+
+    public Order EditOrder(Order orderData)
+    {
+      var order = _repo.GetOrderById(orderData.Id);
+      if (order == null)
+      {
+        throw new Exception("You need an id to find edit an order");
+      }
+      var checkOrder = CanceledorShipped(order);
       order.Name = orderData.Name;
       order.Products = orderData.Products;
       order.ShippedDate = null;
-
       bool success = _repo.UpdateOrder(order);
       if (!success)
       {
@@ -49,7 +59,6 @@ namespace ZenStore.Services
       orderData.Id = Guid.NewGuid().ToString();
       orderData.OrderPlaced = DateTime.Now;
       orderData.ShippedDate = null;
-
       _repo.Create(orderData);
       orderData.Products.ForEach(product =>
       {
@@ -61,10 +70,10 @@ namespace ZenStore.Services
     public Order CancelOrder(string id)
     {
       var order = _repo.GetOrderById(id);
-      if (order.Shipped == true)
-      {
-        throw new Exception("Order cannot be canceled after it was fullfilled");
-      }
+      var checkOrder = CanceledorShipped(order);
+      var getOrders = _repo.GetOrders(id).ToList();
+      order.Products = getOrders;
+      order.ShippedDate = null;
       order.Canceled = true;
       _repo.UpdateOrder(order);
       return order;
@@ -73,21 +82,15 @@ namespace ZenStore.Services
     public Order ShippedOrder(string id)
     {
       var order = _repo.GetOrderById(id);
-
-      if (order.Canceled == true)
-      {
-        throw new Exception("Order cannot be fulfilled after it was canceled");
-      }
-
-      if (order.Shipped != false)
-      {
-        throw new Exception("Order already fulfilled");
-      }
-
+      var checkOrder = CanceledorShipped(order);
+      var getOrders = _repo.GetOrders(id).ToList();
+      order.Products = getOrders;
       order.ShippedDate = DateTime.Today;
+      order.Shipped = true;
       _repo.UpdateOrder(order);
       return order;
     }
+
 
     public OrdersService(OrdersRepository repo)
     {

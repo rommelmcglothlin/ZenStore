@@ -38,7 +38,6 @@ namespace ZenStore.Data
       return _db.QueryFirstOrDefault<Product>
       (
         "SELECT * FROM products WHERE id = @Id",
-
         new { id }
       );
     }
