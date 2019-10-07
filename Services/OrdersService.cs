@@ -15,7 +15,7 @@ namespace ZenStore.Services
       return _repo.GetAll().ToList();
     }
 
-    public Order CanceledorShipped(Order orderData)//saving time to not type this all the time
+    public Order CanceledorShipped(Order orderData)//not type this all the time
     {
       if (orderData.Shipped == true || orderData.Canceled == true)
       {
@@ -30,7 +30,7 @@ namespace ZenStore.Services
       var order = _repo.GetOrderById(orderData.Id);
       if (order == null)
       {
-        throw new Exception("You need an id to find edit an order");
+        throw new Exception("You need an id to find an order to edit");
       }
       var checkOrder = CanceledorShipped(order);
       order.Name = orderData.Name;
